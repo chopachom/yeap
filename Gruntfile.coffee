@@ -5,7 +5,7 @@ module.exports = (grunt) ->
 		coffee:
 			compile:
 				expand: true
-				cwd   : 'coffee'
+				cwd   : 'public/coffee'
 				src   : ['**/*.coffee']
 				dest  : 'js/'
 				ext   : '.js'
@@ -14,15 +14,15 @@ module.exports = (grunt) ->
 			options:
 				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
 			build:
-				src : 'js/main.js'
-				dest: 'build/angular-chatik.js'
+				src : 'public/js/main.js'
+				dest: 'public/build/escype.js'
 
 		connect:
 			server:
 				options:
 					hostname: '0.0.0.0'
 					port: 9001
-					base: './'
+					base: './public'
 
 		scriptlinker:
 			defaultOptions:
@@ -30,34 +30,35 @@ module.exports = (grunt) ->
 					startTag: "<!--SCRIPTS-->"
 					endTag  : "<!--SCRIPTS END-->"
 					fileTmpl: "\n<script src=\"%s\"></script>"
-					appRoot : './'
+					appRoot : './public'
 				files  :
-					'index.html': [
-						'js/components/angular/angular.js',
-						'js/escype/**/*.js',
+					'public/index.html': [
+						'./public/js/components/angular/angular.js',
+						'./public/js/components/angular-cookies/angular-cookies.js',
+						'./public/js/escype/**/*.js',
 					]
 
 		typescript:
 			base:
-				src: ['typescript/**/*.ts']
-				dest: 'js/'
+				src: ['public/typescript/**/*.ts']
+				dest: 'public/js/'
 				options:
 					module: 'amd'
 					target: 'es5'
-					base_path: 'typescript/'
+					base_path: 'public/typescript/'
 					sourcemap: true
 #					fullSourceMapPath: true
 #					declaration: true
 
 		watch:
 			scripts:
-				files: ['js/**/*.js']
+				files: ['public/js/**/*.js']
 				tasks: ['scriptlinker']
 			coffee:
-				files: ['coffee/**/*.coffee']
+				files: ['public/coffee/**/*.coffee']
 				tasks: ['coffee']
 			typescript:
-				files: ['typescript/**/*.ts']
+				files: ['public/typescript/**/*.ts']
 				tasks: ['typescript']
 
 
@@ -70,3 +71,4 @@ module.exports = (grunt) ->
 
 
 	grunt.registerInitTask 'default', ['coffee', 'uglify', 'scriptlinker']
+	grunt.registerInitTask 'server', ['typescript', 'scriptlinker', 'connect:server', 'watch']

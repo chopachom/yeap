@@ -1,5 +1,5 @@
 {
-  "name": "agular-chatik",
+  "name": "escype",
   "version": "0.1.0",
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -12,5 +12,8 @@
     "uglify-js": "~2.3.6",
     "grunt-scriptlinker": "~0.1.1",
     "grunt-typescript": "~0.2.1"
+  },
+  "dependencies": {
+    "cookies": "~0.3.6"
   }
 }
