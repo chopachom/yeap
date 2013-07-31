@@ -39,7 +39,7 @@ class UserService implements IUserService {
 
 	logout(){
 		delete this.$cookie['username'];
-		if(angular.isFunction(this.onlogout)) this.onauthenticated();
+		if(angular.isFunction(this.onlogout)) this.onlogout();
 	}
 
 	online(){
